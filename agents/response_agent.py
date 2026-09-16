@@ -58,6 +58,9 @@ REVISION_PROMPT = """The previous generated response contained unsupported factu
 Unsupported Claims to remove/fix:
 {unsupported}
 
+Required Output Language:
+{language}
+
 Original Query:
 {question}
 
@@ -178,7 +181,8 @@ def run_response_agent(state: AgentState) -> AgentState:
                 res = (revision_p | llm).invoke({
                     "unsupported": unsup_text,
                     "question": state.user_query,
-                    "context": context_str
+                    "context": context_str,
+                    "language": state.language
                 })
                 current_response = res.content
                 state.agent_trace.append("✓ Response revised using retrieved evidence")

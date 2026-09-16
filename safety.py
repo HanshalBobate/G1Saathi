@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 _EMERGENCY_RE = re.compile(
     r"\b(chest pain|heart attack|stroke|can't breathe|cannot breathe|"
     r"difficulty breathing|suicidal|kill myself|hurt myself|self.harm|"
-    r"overdose|unconscious|seizure|anaphylaxis|severe bleeding|"
+    r"overdose|unconscious|seizure|anaphylaxis|severe bleeding|heavy bleeding|bleeding heavily|"
     r"call 911|call 112|need an ambulance|emergency room|going to die|"
     r"सीने में दर्द|छाती में दर्द|सांस लेने में दिक्कत|छातीत दुखणे|छातीत तीव्र वेदना|"
     r"आत्महत्या|हार्ट अटैक|हार्ट अटॅक|हृदयविकाराचा झटका)\b",
