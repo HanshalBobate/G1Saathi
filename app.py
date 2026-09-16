@@ -206,10 +206,23 @@ def _get_example_files() -> list[dict[str, Any]]:
 
 # ── Page Routes ───────────────────────────────────────────────────────────────
 @app.route("/")
+@app.route("/style1")
 def index():
-    """Render the primary single-page application dashboard."""
+    """Render the primary single-page application dashboard (Style 1)."""
     return render_template(
         "index.html",
+        app_name="G1Saathi",
+        app_version=APP_VERSION,
+        provider=PROVIDER.upper(),
+        is_indexed=_is_indexed(),
+    )
+
+
+@app.route("/style2")
+def index_style2():
+    """Render the alternative single-page application dashboard (Style 2)."""
+    return render_template(
+        "index2.html",
         app_name="G1Saathi",
         app_version=APP_VERSION,
         provider=PROVIDER.upper(),

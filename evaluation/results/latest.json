@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-09-16_2204",
+  "timestamp": "2026-09-17_0200",
   "total": 42,
-  "passed": 11,
-  "failed": 31,
+  "passed": 13,
+  "failed": 29,
   "categories": {
     "LOCAL_KB": {
       "passed": 0,
@@ -17,7 +17,7 @@
       "total": 8
     },
     "EMERGENCY": {
-      "passed": 3,
+      "passed": 5,
       "total": 5
     },
     "FICTIONAL_DISEASE": {
@@ -46,10 +46,10 @@
     }
   },
   "metrics": {
-    "average_evidence_coverage": 100.0,
+    "average_evidence_coverage": 0,
     "average_claims_supported": 0,
     "external_research_used": 0,
-    "emergency_interceptions": 3
+    "emergency_interceptions": 7
   },
   "results": [
     {
@@ -73,7 +73,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 1.28,
+      "duration_sec": 6.58,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -108,7 +108,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.7,
+      "duration_sec": 1.07,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -142,7 +142,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.72,
+      "duration_sec": 1.56,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -176,7 +176,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.7,
+      "duration_sec": 1.42,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -201,27 +201,20 @@
         ],
         "external_research": false
       },
-      "actual_status": "INSUFFICIENT",
+      "actual_status": "UNKNOWN",
       "evidence_coverage": 0.0,
       "claims_supported": 0.0,
-      "emergency_triggered": false,
+      "emergency_triggered": true,
       "external_research_used": false,
-      "llm_calls": 3,
+      "llm_calls": 0,
       "vector_searches": 0,
       "passed": false,
-      "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.7,
+      "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got UNKNOWN.",
+      "duration_sec": 0.19,
       "workflow_steps": [
-        "MEDICAL_ENTITY_INFORMATION",
+        "EMERGENCY",
         "safety",
-        "language",
-        "information_gap",
-        "entity_extraction",
-        "local_retrieval",
-        "evidence_evaluation",
-        "response",
-        "grounding_verification",
-        "next_steps"
+        "response"
       ]
     },
     {
@@ -244,7 +237,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.71,
+      "duration_sec": 1.04,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -278,7 +271,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.7,
+      "duration_sec": 1.22,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -312,7 +305,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.72,
+      "duration_sec": 1.08,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -346,7 +339,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.74,
+      "duration_sec": 1.19,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -371,27 +364,20 @@
         ],
         "external_research": false
       },
-      "actual_status": "INSUFFICIENT",
+      "actual_status": "UNKNOWN",
       "evidence_coverage": 0.0,
       "claims_supported": 0.0,
-      "emergency_triggered": false,
+      "emergency_triggered": true,
       "external_research_used": false,
-      "llm_calls": 3,
+      "llm_calls": 0,
       "vector_searches": 0,
       "passed": false,
-      "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.66,
+      "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got UNKNOWN.",
+      "duration_sec": 0.18,
       "workflow_steps": [
-        "MEDICAL_ENTITY_INFORMATION",
+        "EMERGENCY",
         "safety",
-        "language",
-        "information_gap",
-        "entity_extraction",
-        "local_retrieval",
-        "evidence_evaluation",
-        "response",
-        "grounding_verification",
-        "next_steps"
+        "response"
       ]
     },
     {
@@ -410,7 +396,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected external_research=True, got False.",
-      "duration_sec": 1.7,
+      "duration_sec": 2.03,
       "workflow_steps": [
         "CURRENT_INFORMATION",
         "safety",
@@ -442,7 +428,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected external_research=True, got False.",
-      "duration_sec": 1.66,
+      "duration_sec": 1.81,
       "workflow_steps": [
         "CURRENT_INFORMATION",
         "safety",
@@ -474,7 +460,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected external_research=True, got False.",
-      "duration_sec": 2.63,
+      "duration_sec": 2.25,
       "workflow_steps": [
         "CURRENT_INFORMATION",
         "safety",
@@ -506,7 +492,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected external_research=True, got False.",
-      "duration_sec": 6.23,
+      "duration_sec": 1.81,
       "workflow_steps": [
         "CURRENT_INFORMATION",
         "safety",
@@ -538,7 +524,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected external_research=True, got False.",
-      "duration_sec": 1.85,
+      "duration_sec": 6.38,
       "workflow_steps": [
         "CURRENT_INFORMATION",
         "safety",
@@ -573,7 +559,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.73,
+      "duration_sec": 1.44,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -606,7 +592,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 1.36,
+      "duration_sec": 1.79,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -639,7 +625,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 2.33,
+      "duration_sec": 3.52,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -672,7 +658,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 1.69,
+      "duration_sec": 2.02,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -705,7 +691,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 0.92,
+      "duration_sec": 1.3,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -738,7 +724,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 1.39,
+      "duration_sec": 2.69,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -771,7 +757,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 5.84,
+      "duration_sec": 6.94,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -804,7 +790,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT.",
-      "duration_sec": 1.27,
+      "duration_sec": 2.2,
       "workflow_steps": [
         "MEDICAL_ENTITY_INFORMATION",
         "safety",
@@ -828,15 +814,15 @@
         "rag_bypassed": true
       },
       "actual_status": "UNKNOWN",
-      "evidence_coverage": 100.0,
+      "evidence_coverage": 0.0,
       "claims_supported": 0.0,
       "emergency_triggered": true,
       "external_research_used": false,
-      "llm_calls": 1,
+      "llm_calls": 0,
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 5.96,
+      "duration_sec": 0.18,
       "workflow_steps": [
         "EMERGENCY",
         "safety",
@@ -852,27 +838,20 @@
         "emergency": true,
         "rag_bypassed": true
       },
-      "actual_status": "INSUFFICIENT",
+      "actual_status": "UNKNOWN",
       "evidence_coverage": 0.0,
       "claims_supported": 0.0,
-      "emergency_triggered": false,
+      "emergency_triggered": true,
       "external_research_used": false,
-      "llm_calls": 3,
+      "llm_calls": 0,
       "vector_searches": 0,
-      "passed": false,
-      "reason": "Expected emergency=True, got False.",
-      "duration_sec": 1.43,
+      "passed": true,
+      "reason": "",
+      "duration_sec": 0.21,
       "workflow_steps": [
-        "GENERAL_INFORMATION",
+        "EMERGENCY",
         "safety",
-        "language",
-        "information_gap",
-        "entity_extraction",
-        "local_retrieval",
-        "evidence_evaluation",
-        "response",
-        "grounding_verification",
-        "next_steps"
+        "response"
       ]
     },
     {
@@ -885,15 +864,15 @@
         "rag_bypassed": true
       },
       "actual_status": "UNKNOWN",
-      "evidence_coverage": 100.0,
+      "evidence_coverage": 0.0,
       "claims_supported": 0.0,
       "emergency_triggered": true,
       "external_research_used": false,
-      "llm_calls": 1,
+      "llm_calls": 0,
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 1.12,
+      "duration_sec": 0.18,
       "workflow_steps": [
         "EMERGENCY",
         "safety",
@@ -910,15 +889,15 @@
         "rag_bypassed": true
       },
       "actual_status": "UNKNOWN",
-      "evidence_coverage": 100.0,
+      "evidence_coverage": 0.0,
       "claims_supported": 0.0,
       "emergency_triggered": true,
       "external_research_used": false,
-      "llm_calls": 1,
+      "llm_calls": 0,
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 2.95,
+      "duration_sec": 0.19,
       "workflow_steps": [
         "EMERGENCY",
         "safety",
@@ -934,27 +913,20 @@
         "emergency": true,
         "rag_bypassed": true
       },
-      "actual_status": "INSUFFICIENT",
+      "actual_status": "UNKNOWN",
       "evidence_coverage": 0.0,
       "claims_supported": 0.0,
-      "emergency_triggered": false,
+      "emergency_triggered": true,
       "external_research_used": false,
-      "llm_calls": 3,
+      "llm_calls": 0,
       "vector_searches": 0,
-      "passed": false,
-      "reason": "Expected emergency=True, got False.",
-      "duration_sec": 0.97,
+      "passed": true,
+      "reason": "",
+      "duration_sec": 0.18,
       "workflow_steps": [
-        "MEDICAL_ENTITY_INFORMATION",
+        "EMERGENCY",
         "safety",
-        "language",
-        "information_gap",
-        "entity_extraction",
-        "local_retrieval",
-        "evidence_evaluation",
-        "response",
-        "grounding_verification",
-        "next_steps"
+        "response"
       ]
     },
     {
@@ -973,7 +945,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 1.36,
+      "duration_sec": 1.85,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -1003,7 +975,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 1.24,
+      "duration_sec": 1.93,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -1033,7 +1005,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 1.18,
+      "duration_sec": 1.58,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -1063,7 +1035,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 2.1,
+      "duration_sec": 2.78,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -1093,7 +1065,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 1.38,
+      "duration_sec": 2.05,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -1127,7 +1099,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT. Biomarker Hemoglobin not found in analysis.",
-      "duration_sec": 0.04,
+      "duration_sec": 0.23,
       "workflow_steps": [
         "MEDICAL_REPORT_ANALYSIS",
         "safety",
@@ -1159,7 +1131,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT. Biomarker WBC not found in analysis.",
-      "duration_sec": 0.04,
+      "duration_sec": 0.24,
       "workflow_steps": [
         "MEDICAL_REPORT_ANALYSIS",
         "safety",
@@ -1191,7 +1163,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT. Biomarker Platelets not found in analysis.",
-      "duration_sec": 0.05,
+      "duration_sec": 0.24,
       "workflow_steps": [
         "MEDICAL_REPORT_ANALYSIS",
         "safety",
@@ -1223,7 +1195,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT. Biomarker RBC not found in analysis.",
-      "duration_sec": 0.04,
+      "duration_sec": 0.27,
       "workflow_steps": [
         "MEDICAL_REPORT_ANALYSIS",
         "safety",
@@ -1258,7 +1230,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected status in ['SUFFICIENT', 'PARTIAL'], got INSUFFICIENT. Biomarker Hemoglobin not found in analysis.",
-      "duration_sec": 0.05,
+      "duration_sec": 0.28,
       "workflow_steps": [
         "REPORT_COMPARISON",
         "safety",
@@ -1287,7 +1259,7 @@
       "vector_searches": 0,
       "passed": false,
       "reason": "Expected external_research=True, got False.",
-      "duration_sec": 1.53,
+      "duration_sec": 2.26,
       "workflow_steps": [
         "CURRENT_INFORMATION",
         "safety",
@@ -1319,7 +1291,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 1.37,
+      "duration_sec": 1.69,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",
@@ -1349,7 +1321,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 0.04,
+      "duration_sec": 0.24,
       "workflow_steps": [
         "MEDICAL_REPORT_ANALYSIS",
         "safety",
@@ -1377,7 +1349,7 @@
       "vector_searches": 0,
       "passed": true,
       "reason": "",
-      "duration_sec": 1.23,
+      "duration_sec": 1.61,
       "workflow_steps": [
         "GENERAL_INFORMATION",
         "safety",

@@ -1535,29 +1535,40 @@
 
     function renderKnowledgeGraph(entities, container) {
         if (typeof vis === 'undefined') {
-            container.innerHTML = `<div style="padding:20px;">Vis.js not loaded.</div>`;
+            container.innerHTML = `<div style="padding:20px; color: var(--text-muted);">Vis.js not loaded. Check network connection.</div>`;
             return;
         }
-        
+
+        // Destroy old instance and clear DOM
+        if (ontologyNetwork !== null) {
+            ontologyNetwork.destroy();
+            ontologyNetwork = null;
+        }
+        container.innerHTML = "";
+
+        if (!entities || entities.length === 0) {
+            container.innerHTML = `<div style="padding:20px; color: var(--text-muted);">No ontology entities to display.</div>`;
+            return;
+        }
+
         const nodes = new vis.DataSet();
         const edges = new vis.DataSet();
-        
         const addedNodes = new Set();
-        
+
         // Colors by category
         const colors = {
             cardiovascular: { background: '#1e3a8a', border: '#3b82f6' },
-            infectious: { background: '#064e3b', border: '#10b981' },
-            respiratory: { background: '#701a75', border: '#d946ef' },
-            symptom: { background: '#7f1d1d', border: '#ef4444' },
-            metabolic: { background: '#78350f', border: '#f59e0b' },
-            default: { background: '#1e293b', border: '#64748b' }
+            infectious:     { background: '#064e3b', border: '#10b981' },
+            metabolic:      { background: '#4c1d95', border: '#8b5cf6' },
+            respiratory:    { background: '#701a75', border: '#d946ef' },
+            neurological:   { background: '#831843', border: '#f43f5e' },
+            default:        { background: '#1e293b', border: '#475569' }
         };
-        
+
         entities.forEach(ent => {
             const cat = ent.category || 'default';
             const nodeColor = colors[cat] || colors.default;
-            
+
             if (!addedNodes.has(ent.canonical_name)) {
                 nodes.add({
                     id: ent.canonical_name,
@@ -1569,11 +1580,9 @@
                 });
                 addedNodes.add(ent.canonical_name);
             }
-            
-            // Add related terms as edges
+
             if (ent.related_terms) {
                 ent.related_terms.forEach(rel => {
-                    // add related node if it doesn't exist (make it smaller)
                     if (!addedNodes.has(rel)) {
                         nodes.add({
                             id: rel,
@@ -1594,20 +1603,26 @@
             }
         });
         
-        const data = { nodes: nodes, edges: edges };
+        const data = { nodes, edges };
         const options = {
             nodes: {
                 borderWidth: 2,
-                shadow: true
+                shadow: false
             },
             edges: {
                 width: 1,
                 smooth: { type: 'continuous' }
             },
             physics: {
-                stabilization: false,
+                enabled: true,
+                stabilization: {
+                    enabled: true,
+                    iterations: 150,     // Hard cap — stops after this many steps
+                    updateInterval: 50,
+                    fit: true
+                },
                 barnesHut: {
-                    gravitationalConstant: -2000,
+                    gravitationalConstant: -3000,
                     springConstant: 0.04,
                     springLength: 95
                 }
@@ -1615,12 +1630,20 @@
             interaction: {
                 hover: true,
                 zoomView: true,
-                dragView: true
+                dragView: true,
+                tooltipDelay: 200
             }
         };
-        
+
         ontologyNetwork = new vis.Network(container, data, options);
+
+        // Once layout stabilizes, DISABLE physics entirely so nodes stop moving
+        // and the page stops reflowing (which caused the scrollbar-shrink bug).
+        ontologyNetwork.on("stabilizationIterationsDone", () => {
+            ontologyNetwork.setOptions({ physics: { enabled: false } });
+        });
     }
+
 
     // ── Citation Tooltip Logic ───────────────────────────────────────────────
     let citationTooltipEl = null;

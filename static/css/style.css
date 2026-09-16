@@ -1322,3 +1322,23 @@ body {
     margin-left: 10px;
     margin-bottom: 10px;
 }
+
+/* Citation Tooltip */
+.citation-tooltip {
+    position: fixed;
+    background: var(--bg-surface-elev);
+    color: var(--text-main);
+    padding: 12px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-medium);
+    width: max-content;
+    max-width: 350px;
+    white-space: normal;
+    z-index: 9999;
+    font-size: 0.85rem;
+    pointer-events: none;
+    line-height: 1.5;
+    display: none;
+    backdrop-filter: blur(10px);
+}

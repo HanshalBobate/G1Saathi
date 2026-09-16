@@ -9,7 +9,7 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
     
     <!-- Marked.js for markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
@@ -21,15 +21,59 @@
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
 </head>
 <body>
+    <!-- Icon Sprite (referenced via <use> throughout the UI in place of emoji) -->
+    <svg class="icon-sprite" aria-hidden="true" focusable="false">
+        <defs>
+            <symbol id="icon-logo" viewBox="0 0 24 24"><polyline points="4.5 12.5 8 12.5 10 6.5 14 18.5 16 12.5 19.5 12.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+            <symbol id="icon-chat" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+            <symbol id="icon-file" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></g></symbol>
+            <symbol id="icon-book" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></g></symbol>
+            <symbol id="icon-dna" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="10" ry="4.2"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4.2" transform="rotate(120 12 12)"/></g></symbol>
+            <symbol id="icon-flask" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6"/><path d="M10 3v6.5L4.5 19a1 1 0 0 0 .87 1.5h13.26a1 1 0 0 0 .87-1.5L14 9.5V3"/><line x1="6.5" y1="15" x2="17.5" y2="15"/></g></symbol>
+            <symbol id="icon-settings" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></g></symbol>
+            <symbol id="icon-alert" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></g></symbol>
+            <symbol id="icon-menu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></g></symbol>
+            <symbol id="icon-trash" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></g></symbol>
+            <symbol id="icon-play" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></g></symbol>
+            <symbol id="icon-search" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></g></symbol>
+            <symbol id="icon-upload" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/></g></symbol>
+            <symbol id="icon-clipboard" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></g></symbol>
+            <symbol id="icon-zap" viewBox="0 0 24 24"><polygon fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+            <symbol id="icon-check-circle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></g></symbol>
+            <symbol id="icon-bookmark" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+            <symbol id="icon-database" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></g></symbol>
+            <symbol id="icon-cpu" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="15" x2="23" y2="15"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="15" x2="4" y2="15"/></g></symbol>
+            <symbol id="icon-layers" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></g></symbol>
+            <symbol id="icon-refresh" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></g></symbol>
+            <symbol id="icon-help-circle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></g></symbol>
+            <symbol id="icon-lightbulb" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.3 1 2.3h6c0-1 .4-1.8 1-2.3A7 7 0 0 0 12 2z"/></g></symbol>
+            <symbol id="icon-bar-chart" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></g></symbol>
+            <symbol id="icon-download" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></g></symbol>
+            <symbol id="icon-globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></g></symbol>
+            <symbol id="icon-user" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></g></symbol>
+            <symbol id="icon-x-circle" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></g></symbol>
+            <symbol id="icon-info" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></g></symbol>
+            <symbol id="icon-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></g></symbol>
+            <symbol id="icon-check" viewBox="0 0 24 24"><polyline fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="20 6 9 17 4 12"/></symbol>
+            <symbol id="icon-x" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></g></symbol>
+            <symbol id="icon-chevron-down" viewBox="0 0 24 24"><polyline fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="6 9 12 15 18 9"/></symbol>
+            <symbol id="icon-arrow-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></g></symbol>
+            <symbol id="icon-arrow-down" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></g></symbol>
+        </defs>
+    </svg>
+
     <div class="app-layout">
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="brand-logo">
-                    <span class="logo-icon">🩺</span>
+                    <span class="logo-icon"><svg class="icon"><use href="#icon-logo"></use></svg></span>
                     <div class="brand-text">
                         <h1 class="brand-title">G1Saathi</h1>
                         <span class="brand-subtitle">Agentic Healthcare AI</span>
@@ -39,28 +83,28 @@
 
             <nav class="sidebar-nav">
                 <button class="nav-btn active" data-tab="ask" id="nav-btn-ask">
-                    <span class="nav-icon">💬</span>
+                    <span class="nav-icon"><svg class="icon"><use href="#icon-chat"></use></svg></span>
                     <span class="nav-label">Ask G1Saathi</span>
                 </button>
                 <button class="nav-btn" data-tab="reports" id="nav-btn-reports">
-                    <span class="nav-icon">📄</span>
+                    <span class="nav-icon"><svg class="icon"><use href="#icon-file"></use></svg></span>
                     <span class="nav-label">Medical Reports</span>
                     <span class="badge badge-subtle" id="reports-count-badge">0</span>
                 </button>
                 <button class="nav-btn" data-tab="sources" id="nav-btn-sources">
-                    <span class="nav-icon">📚</span>
+                    <span class="nav-icon"><svg class="icon"><use href="#icon-book"></use></svg></span>
                     <span class="nav-label">Knowledge Sources</span>
                 </button>
                 <button class="nav-btn" data-tab="knowledge" id="nav-btn-knowledge">
-                    <span class="nav-icon">🧬</span>
+                    <span class="nav-icon"><svg class="icon"><use href="#icon-dna"></use></svg></span>
                     <span class="nav-label">Medical Knowledge</span>
                 </button>
                 <button class="nav-btn" data-tab="evaluation" id="nav-btn-evaluation">
-                    <span class="nav-icon">🧪</span>
+                    <span class="nav-icon"><svg class="icon"><use href="#icon-flask"></use></svg></span>
                     <span class="nav-label">Evaluation Center</span>
                 </button>
                 <button class="nav-btn" data-tab="system" id="nav-btn-system">
-                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-icon"><svg class="icon"><use href="#icon-settings"></use></svg></span>
                     <span class="nav-label">System</span>
                 </button>
             </nav>
@@ -83,7 +127,7 @@
                 </div>
 
                 <div class="disclaimer-card">
-                    <div class="disclaimer-title">⚠️ Clinical Disclaimer</div>
+                    <div class="disclaimer-title"><svg class="icon"><use href="#icon-alert"></use></svg> Clinical Disclaimer</div>
                     <p class="disclaimer-text">
                         G1Saathi provides medical <strong>information only</strong> based strictly on uploaded documents. It does not provide medical diagnosis, treatment, or clinical advice.
                     </p>
@@ -101,18 +145,18 @@
             <!-- Topbar (Mobile trigger + Page Title) -->
             <header class="topbar">
                 <div class="topbar-left">
-                    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle menu">☰</button>
+                    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle menu"><svg class="icon"><use href="#icon-menu"></use></svg></button>
                     <div class="current-view-title" id="current-view-title">Ask G1Saathi</div>
                 </div>
                 <div class="topbar-right">
-                    <a href="/style2" class="btn btn-ghost btn-sm" id="btn-switch-style" title="Switch to Style 2" style="text-decoration: none;">
-                        <span>🎨 Switch to Style 2</span>
+                    <a href="/style1" class="btn btn-ghost btn-sm" id="btn-switch-style" title="Switch to Style 1" style="text-decoration: none;">
+                        <svg class="icon"><use href="#icon-refresh"></use></svg><span>Switch to Style 1</span>
                     </a>
                     <button class="btn btn-ghost btn-sm" id="btn-quick-samples" title="Load sample medical papers">
-                        <span>🧪 Load Sample Reports</span>
+                        <svg class="icon"><use href="#icon-flask"></use></svg><span>Load Sample Reports</span>
                     </button>
                     <button class="btn btn-ghost btn-sm" id="btn-clear-chat" title="Clear conversation history">
-                        <span>🗑️ Clear Chat</span>
+                        <svg class="icon"><use href="#icon-trash"></use></svg><span>Clear Chat</span>
                     </button>
                 </div>
             </header>
@@ -123,13 +167,13 @@
                     <div class="messages-scroll" id="messages-container">
                         <!-- Welcome empty state -->
                         <div class="empty-state" id="empty-state">
-                            <div class="empty-icon">🩺</div>
+                            <div class="empty-icon"><svg class="icon"><use href="#icon-logo"></use></svg></div>
                             <h2 class="empty-title">Welcome to G1Saathi</h2>
                             <p class="empty-sub">
                                 An agentic healthcare information system providing grounded answers with exact source & page-level citations from your medical reports.
                             </p>
 
-                            <div class="quick-prompts-title">🎬 Demo Scenarios:</div>
+                            <div class="quick-prompts-title"><svg class="icon"><use href="#icon-play"></use></svg> Demo Scenarios:</div>
                             <div class="quick-prompts" id="quick-prompts">
                                 <button class="prompt-chip" data-prompt="What are the symptoms of diabetes?">
                                     Scenario 1: What are the symptoms of diabetes? (Normal)
@@ -178,8 +222,8 @@
                     <!-- Retrieval Inspector -->
                     <div class="retrieval-inspector" id="retrieval-inspector" style="display: none; border-top: 1px solid var(--border-color); padding: 12px; background: var(--bg-1); font-size: 0.85em; margin-top: 10px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" id="inspector-toggle">
-                            <strong>🔬 Retrieval Inspector</strong>
-                            <span id="inspector-icon">▼</span>
+                            <strong><svg class="icon"><use href="#icon-search"></use></svg> Retrieval Inspector</strong>
+                            <span id="inspector-icon" class="chevron"><svg class="icon"><use href="#icon-chevron-down"></use></svg></span>
                         </div>
                         <div id="inspector-content" style="display: none; margin-top: 10px; font-family: monospace; color: #555; max-height: 200px; overflow-y: auto;">
                             <!-- Diagnostics injected here -->
@@ -192,15 +236,15 @@
             <!-- TAB 2: MEDICAL REPORTS -->
             <section class="tab-pane" id="tab-reports">
                 <div class="view-header">
-                    <h2 class="view-title">📄 Medical Reports & Document Ingestion</h2>
+                    <h2 class="view-title"><svg class="icon"><use href="#icon-file"></use></svg> Medical Reports & Document Ingestion</h2>
                     <p class="view-subtitle">Upload clinical guidelines, lab studies, or imaging reports (PDF). Rebuilding the index replaces the current vector store to guarantee document isolation.</p>
                 </div>
 
                 <div class="reports-grid">
                     <!-- Dropzone Card -->
-                    <div class="card dropzone-card">
+                    <div class="card dropzone-card col-span-5">
                         <div class="dropzone" id="pdf-dropzone">
-                            <div class="dropzone-icon">📥</div>
+                            <div class="dropzone-icon"><svg class="icon"><use href="#icon-upload"></use></svg></div>
                             <h3 class="dropzone-title">Drag & Drop Medical PDFs Here</h3>
                             <p class="dropzone-sub">or click to browse from your computer (PDF only, up to 64MB)</p>
                             <input type="file" id="file-input" accept=".pdf" multiple style="display: none;">
@@ -210,13 +254,13 @@
                         <div class="sample-loader-box">
                             <span>Want to test immediately with real samples?</span>
                             <button class="btn btn-sm btn-secondary" id="btn-load-samples-card">
-                                📋 Load Sample Studies (Ultrasound & SPECT)
+                                <svg class="icon"><use href="#icon-clipboard"></use></svg> Load Sample Studies (Ultrasound & SPECT)
                             </button>
                         </div>
                     </div>
 
                     <!-- File List & Index Actions Card -->
-                    <div class="card file-list-card">
+                    <div class="card file-list-card col-span-7">
                         <div class="card-header-row">
                             <div>
                                 <h3 class="card-title">Uploaded Reports Queue</h3>
@@ -225,7 +269,7 @@
                             <div class="queue-header-actions">
                                 <span class="file-count-badge" id="queue-count-badge">0 files</span>
                                 <button class="btn btn-ghost btn-sm" id="btn-clear-queue" title="Remove all files from queue">
-                                    🗑️ Clear Queue
+                                    <svg class="icon"><use href="#icon-trash"></use></svg> Clear Queue
                                 </button>
                             </div>
                         </div>
@@ -236,7 +280,7 @@
 
                         <div class="index-actions-box">
                             <button class="btn btn-primary btn-lg" id="btn-start-index" disabled>
-                                ⚡ Index Uploaded Reports into Chroma
+                                <svg class="icon"><use href="#icon-zap"></use></svg> Index Uploaded Reports into Chroma
                             </button>
                             <p class="index-actions-note">Processes text chunks, computes embeddings, and populates the isolated vector store.</p>
                         </div>
@@ -244,7 +288,7 @@
                         <!-- Progress / Result Box -->
                         <div class="index-progress-box" id="index-progress-box" style="display: none;">
                             <div class="progress-spinner" id="progress-spinner"></div>
-                            <span class="progress-static-icon" id="progress-static-icon" style="display: none;">✅</span>
+                            <span class="progress-static-icon" id="progress-static-icon" style="display: none;"></span>
                             <div class="progress-details" id="progress-details">Indexing in progress...</div>
                         </div>
                     </div>
@@ -254,7 +298,7 @@
                 <div class="card mt-4" id="report-analysis-card">
                     <div class="card-header-row">
                         <div>
-                            <h3 class="card-title">🔬 Deterministic Report Analysis & Trends</h3>
+                            <h3 class="card-title"><svg class="icon"><use href="#icon-search"></use></svg> Deterministic Report Analysis & Trends</h3>
                             <p class="queue-subtitle">Analyze single reports or compare longitudinal trends. <span class="badge badge-amber">Synthetic Demo</span></p>
                         </div>
                         <div>
@@ -271,13 +315,13 @@
             <!-- TAB 3: KNOWLEDGE SOURCES -->
             <section class="tab-pane" id="tab-sources">
                 <div class="view-header">
-                    <h2 class="view-title">📚 Knowledge Sources & Vector Index</h2>
+                    <h2 class="view-title"><svg class="icon"><use href="#icon-book"></use></svg> Knowledge Sources & Vector Index</h2>
                     <p class="view-subtitle">Live overview of the Chroma vector store, embedding models, and chunking parameters.</p>
                 </div>
 
                 <div class="stats-row">
-                    <div class="stat-card">
-                        <div class="stat-icon">🗄️</div>
+                    <div class="stat-card col-span-4">
+                        <div class="stat-icon"><svg class="icon"><use href="#icon-database"></use></svg></div>
                         <div class="stat-info">
                             <div class="stat-label">Vector Store</div>
                             <div class="stat-val" id="stat-vectorstore">Chroma DB</div>
@@ -285,24 +329,24 @@
                             <div class="stat-sub" style="margin-top: 4px;">Last indexed: <span id="stat-last-indexed">N/A</span></div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🧠</div>
+                    <div class="stat-card col-span-4">
+                        <div class="stat-icon"><svg class="icon"><use href="#icon-cpu"></use></svg></div>
                         <div class="stat-info">
                             <div class="stat-label">Embedding Model</div>
                             <div class="stat-val" id="stat-embed-model">Loading...</div>
                             <div class="stat-badge badge-blue" id="stat-embed-provider">Local</div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📑</div>
+                    <div class="stat-card col-span-2">
+                        <div class="stat-icon"><svg class="icon"><use href="#icon-file"></use></svg></div>
                         <div class="stat-info">
                             <div class="stat-label">Active Documents</div>
                             <div class="stat-val" id="stat-doc-count">0</div>
                             <div class="stat-sub">PDF sources loaded</div>
                         </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">🧩</div>
+                    <div class="stat-card col-span-2">
+                        <div class="stat-icon"><svg class="icon"><use href="#icon-layers"></use></svg></div>
                         <div class="stat-info">
                             <div class="stat-label">Total Chunks</div>
                             <div class="stat-val" id="stat-chunks-count">0 Chunks</div>
@@ -316,7 +360,7 @@
                     <div class="card-header-row">
                         <h3 class="card-title">3D Vector Database Representation</h3>
                         <button class="btn btn-ghost btn-sm" id="btn-refresh-plot" title="Refresh 3D Plot">
-                            🔄 Refresh
+                            <svg class="icon"><use href="#icon-refresh"></use></svg> Refresh
                         </button>
                     </div>
                     <div id="vector-3d-plot" style="width: 100%; height: 500px; border-radius: 8px; overflow: hidden; background: var(--bg-1);">
@@ -328,7 +372,7 @@
                     <div class="card-header-row">
                         <h3 class="card-title">Indexed Clinical Documents</h3>
                         <button class="btn btn-danger btn-sm" id="btn-clear-index">
-                            🗑️ Clear Vector Index
+                            <svg class="icon"><use href="#icon-trash"></use></svg> Clear Vector Index
                         </button>
                     </div>
 
@@ -354,7 +398,7 @@
             <!-- TAB 4: MEDICAL KNOWLEDGE -->
             <section class="tab-pane" id="tab-knowledge">
                 <div class="view-header">
-                    <h2 class="view-title">🧬 Medical Knowledge Explorer</h2>
+                    <h2 class="view-title"><svg class="icon"><use href="#icon-dna"></use></svg> Medical Knowledge Explorer</h2>
                     <p class="view-subtitle">Explore the structured medical ontology mapping diseases, symptoms, and multilingual terminology.</p>
                 </div>
                 
@@ -374,9 +418,9 @@
                     <div class="card" style="flex: 2; display: flex; flex-direction: column;">
                         <div class="card-header-row">
                             <h3 class="card-title">Knowledge Graph</h3>
-                            <button class="btn btn-ghost btn-sm" id="btn-refresh-graph">🔄 Refresh</button>
+                            <button class="btn btn-ghost btn-sm" id="btn-refresh-graph"><svg class="icon"><use href="#icon-refresh"></use></svg> Refresh</button>
                         </div>
-                        <div id="knowledge-graph-container" style="height: 460px; width: 100%; background: var(--bg-1); border-radius: 8px; border: 1px solid var(--border-color); overflow: hidden; position: relative;">
+                        <div id="knowledge-graph-container" style="flex: 1; min-height: 400px; background: var(--bg-1); border-radius: 8px; border: 1px solid var(--border-color);">
                             <!-- Vis.js network will be rendered here -->
                         </div>
                         <p style="font-size: 0.8em; color: #888; margin-top: 10px; text-align: center;">This is a terminology explorer, not a diagnostic tool.</p>
@@ -387,12 +431,12 @@
             <!-- TAB 5: SYSTEM -->
             <section class="tab-pane" id="tab-system">
                 <div class="view-header">
-                    <h2 class="view-title">⚙️ System Diagnostics & Runtime</h2>
+                    <h2 class="view-title"><svg class="icon"><use href="#icon-settings"></use></svg> System Diagnostics & Runtime</h2>
                     <p class="view-subtitle">Runtime parameters, provider configuration, and structured logging telemetry.</p>
                 </div>
 
                 <div class="system-grid">
-                    <div class="card">
+                    <div class="card col-span-4">
                         <h3 class="card-title">Application Engine</h3>
                         <div class="sys-item">
                             <span class="sys-label">App:</span>
@@ -412,7 +456,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card col-span-4">
                         <h3 class="card-title">LLM & Retrieval Stack</h3>
                         <div class="sys-item">
                             <span class="sys-label">Provider:</span>
@@ -432,7 +476,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card col-span-4">
                         <h3 class="card-title">Storage & Logging</h3>
                         <div class="sys-item">
                             <span class="sys-label">Vector Store Path:</span>
@@ -448,8 +492,8 @@
                         </div>
                     </div>
 
-                    <div class="card">
-                        <h3 class="card-title">⚡ Workflow Metrics</h3>
+                    <div class="card col-span-6">
+                        <h3 class="card-title"><svg class="icon"><use href="#icon-zap"></use></svg> Workflow Metrics</h3>
                         <div class="sys-item">
                             <span class="sys-label">Total Queries:</span>
                             <span class="sys-val" id="metric-queries">0</span>
@@ -480,7 +524,7 @@
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card col-span-6">
                         <h3 class="card-title">Local Ollama Setup Notice</h3>
                         <p class="ollama-guide">
                             When running locally with Ollama, ensure your background service is active:
@@ -494,19 +538,19 @@ ollama pull nomic-embed-text</code></pre>
             <!-- TAB 6: EVALUATION CENTER -->
             <section class="tab-pane" id="tab-evaluation">
                 <div class="view-header">
-                    <h2 class="view-title">🧪 Evaluation & Reliability Center</h2>
+                    <h2 class="view-title"><svg class="icon"><use href="#icon-flask"></use></svg> Evaluation & Reliability Center</h2>
                     <p class="view-subtitle">Automated validation of RAG pipelines, safety constraints, evidence coverage, and clinical accuracy metrics.</p>
                 </div>
 
                 <div class="evaluation-actions mb-4" style="display: flex; gap: 10px; margin-bottom: 20px;">
                     <button class="btn btn-primary" id="btn-run-eval">
-                        ⚡ Run Full Evaluation Suite
+                        <svg class="icon"><use href="#icon-zap"></use></svg> Run Full Evaluation Suite
                     </button>
                     <button class="btn btn-outline" id="btn-export-eval">
-                        📥 Export to CSV
+                        <svg class="icon"><use href="#icon-download"></use></svg> Export to CSV
                     </button>
                     <button class="btn btn-secondary" id="btn-demo-mode" style="margin-left: auto;">
-                        🎬 Enter Hackathon Demo Mode
+                        <svg class="icon"><use href="#icon-play"></use></svg> Enter Hackathon Demo Mode
                     </button>
                 </div>
                 
@@ -519,7 +563,7 @@ ollama pull nomic-embed-text</code></pre>
                 </div>
 
                 <div class="system-grid">
-                    <div class="card">
+                    <div class="card col-span-6">
                         <h3 class="card-title">Overall Scoreboard</h3>
                         <div class="sys-item">
                             <span class="sys-label">Total Tests:</span>
@@ -539,7 +583,7 @@ ollama pull nomic-embed-text</code></pre>
                         </div>
                     </div>
 
-                    <div class="card">
+                    <div class="card col-span-6">
                         <h3 class="card-title">Evidence & Reliability Metrics</h3>
                         <div class="sys-item">
                             <span class="sys-label">Avg Evidence Coverage:</span>
@@ -590,7 +634,7 @@ ollama pull nomic-embed-text</code></pre>
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="modal-source-title">Source Citation Detail</h3>
-                <button class="modal-close" id="modal-close-btn">&times;</button>
+                <button class="modal-close" id="modal-close-btn" aria-label="Close"><svg class="icon"><use href="#icon-x"></use></svg></button>
             </div>
             <div class="modal-body" id="modal-source-body">
                 <!-- Snippet injected dynamically -->
@@ -602,6 +646,6 @@ ollama pull nomic-embed-text</code></pre>
     <div class="toast-container" id="toast-container"></div>
 
     <!-- App JavaScript -->
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app2.js') }}"></script>
 </body>
 </html>
