@@ -33,7 +33,7 @@ Return ONLY valid JSON:
 {{
   "status": "COMPLETE" or "MISSING_INFORMATION",
   "missing": ["list", "of", "missing", "items", "or", "empty", "if", "complete"],
-  "message": "A helpful message explaining what is needed, or null if complete."
+  "message": "A helpful message explaining what is needed, or null if complete. (Write this message in {language})"
 }}
 """),
         ("human", "{question}")
@@ -43,7 +43,10 @@ Return ONLY valid JSON:
     state.tool_calls["llm_information_gap"] = state.tool_calls.get("llm_information_gap", 0) + 1
     
     try:
-        response = (prompt | llm).invoke({"question": state.user_query})
+        response = (prompt | llm).invoke({
+            "question": state.user_query,
+            "language": getattr(state, "language", "en")
+        })
         text = response.content.strip()
         if text.startswith("```json"):
             text = text[7:]

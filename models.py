@@ -27,3 +27,10 @@ def get_chat_model():
     from langchain_openai import ChatOpenAI
 
     return ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+def get_fast_chat_model():
+    if PROVIDER == "ollama":
+        from langchain_ollama import ChatOllama
+        return ChatOllama(model=os.getenv("OLLAMA_FAST_CHAT_MODEL", "qwen2.5:1.5b"), temperature=0)
+    from langchain_openai import ChatOpenAI
+    return ChatOpenAI(model="gpt-4o-mini", temperature=0)

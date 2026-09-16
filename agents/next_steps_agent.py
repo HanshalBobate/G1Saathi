@@ -41,6 +41,7 @@ Return ONLY a valid JSON array of strings:
   "Step 1...",
   "Step 2..."
 ]
+(Write these steps in {language})
 """),
         ("human", "Query: {question}\nTask Type: {task_type}")
     ])
@@ -52,7 +53,8 @@ Return ONLY a valid JSON array of strings:
         task_type = state.task_plan.task_type.value if getattr(state, "task_plan", None) else "UNKNOWN"
         response = (prompt | llm).invoke({
             "question": state.user_query,
-            "task_type": task_type
+            "task_type": task_type,
+            "language": getattr(state, "language", "en")
         })
         
         text = response.content.strip()

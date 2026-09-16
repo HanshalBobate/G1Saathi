@@ -33,23 +33,39 @@ _EMERGENCY_BANNER = (
 )
 
 
+from models import get_fast_chat_model
+from langchain_core.prompts import ChatPromptTemplate
+
+_SAFETY_PROMPT = ChatPromptTemplate.from_messages([
+    ("system", "You are an emergency detection system. Does the following user query describe a potential medical emergency (like severe bleeding, chest pain, stroke, suicidal thoughts, etc.)? Answer ONLY with 'yes' or 'no'."),
+    ("human", "{query}")
+])
+
 def screen(query: str) -> dict:
     """
-    Screen a user query for safety concerns.
-
-    Returns:
-        dict with keys:
-          - is_emergency (bool)
-          - risk_level (str): 'none' | 'emergency'
-          - safety_note (str | None): Banner to prepend, or None
+    Screen a user query for safety concerns using a fast LLM.
+    Returns: dict with is_emergency, risk_level, safety_note
     """
-    if _EMERGENCY_RE.search(query):
-        logger.warning("Safety: emergency pattern detected in query (length=%d)", len(query))
-        return {
-            "is_emergency": True,
-            "risk_level": "emergency",
-            "safety_note": _EMERGENCY_BANNER,
-        }
+    try:
+        res = (_SAFETY_PROMPT | get_fast_chat_model()).invoke({"query": query})
+        answer = res.content.strip().lower()
+        if "yes" in answer:
+            logger.warning("Safety: emergency detected by LLM in query")
+            return {
+                "is_emergency": True,
+                "risk_level": "emergency",
+                "safety_note": _EMERGENCY_BANNER,
+            }
+    except Exception as e:
+        logger.error(f"Safety LLM check failed: {e}")
+        # Fallback to regex if LLM fails
+        if _EMERGENCY_RE.search(query):
+            return {
+                "is_emergency": True,
+                "risk_level": "emergency",
+                "safety_note": _EMERGENCY_BANNER,
+            }
+            
     return {
         "is_emergency": False,
         "risk_level": "none",
