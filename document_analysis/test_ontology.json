@@ -1,0 +1,66 @@
+{
+  "CBC": [
+    { "canonical_name": "Hemoglobin", "aliases": ["Hemoglobin", "Hb", "Hgb", "Haemoglobin"], "units": ["g/dL", "gm/dL", "g/L"] },
+    { "canonical_name": "WBC", "aliases": ["WBC", "White Blood Cells", "Leukocytes", "TLC", "Total Leukocyte Count"], "units": ["/cumm", "cells/mcL", "/uL", "x10^3/uL", "x 10^3/uL", "thous/mcL", "10^9/L"] },
+    { "canonical_name": "RBC", "aliases": ["RBC", "Red Blood Cells", "Erythrocytes"], "units": ["mill/mcL", "x10^6/uL", "x 10^6/uL", "10^12/L"] },
+    { "canonical_name": "Platelets", "aliases": ["Platelets", "PLT", "Platelet Count", "Thrombocytes"], "units": ["/cumm", "/uL", "x10^3/uL", "10^9/L", "thous/mcL"] },
+    { "canonical_name": "Hematocrit", "aliases": ["Hematocrit", "Hct", "PCV", "Packed Cell Volume"], "units": ["%", "L/L"] },
+    { "canonical_name": "MCV", "aliases": ["MCV", "Mean Corpuscular Volume"], "units": ["fL"] },
+    { "canonical_name": "MCH", "aliases": ["MCH", "Mean Corpuscular Hemoglobin"], "units": ["pg"] },
+    { "canonical_name": "MCHC", "aliases": ["MCHC", "Mean Corpuscular Hemoglobin Concentration"], "units": ["g/dL", "%"] },
+    { "canonical_name": "RDW", "aliases": ["RDW", "Red Cell Distribution Width", "RDW-CV", "RDW-SD"], "units": ["%", "fL"] }
+  ],
+  "Glucose": [
+    { "canonical_name": "Fasting Glucose", "aliases": ["Fasting Glucose", "Glucose Fasting", "Fasting Blood Sugar", "FBS", "Fasting Blood Glucose", "FBG"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "Random Glucose", "aliases": ["Random Glucose", "Random Blood Sugar", "RBS", "Random Blood Glucose"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "Postprandial Glucose", "aliases": ["Postprandial Glucose", "PPBS", "PPBG", "Post Prandial Blood Sugar"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "HbA1c", "aliases": ["HbA1c", "Glycosylated Hemoglobin", "Glycated Hemoglobin", "A1C"], "units": ["%"] }
+  ],
+  "Lipid": [
+    { "canonical_name": "Total Cholesterol", "aliases": ["Total Cholesterol", "Serum Cholesterol", "Cholesterol"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "LDL", "aliases": ["LDL", "LDL Cholesterol", "Low Density Lipoprotein", "LDL-C"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "HDL", "aliases": ["HDL", "HDL Cholesterol", "High Density Lipoprotein", "HDL-C"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "Triglycerides", "aliases": ["Triglycerides", "TG", "Trigs"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "VLDL", "aliases": ["VLDL", "VLDL Cholesterol", "Very Low Density Lipoprotein"], "units": ["mg/dL", "mmol/L"] }
+  ],
+  "Thyroid": [
+    { "canonical_name": "TSH", "aliases": ["TSH", "Thyroid Stimulating Hormone", "Thyrotropin"], "units": ["mIU/L", "uIU/mL", "mcIU/mL"] },
+    { "canonical_name": "Free T4", "aliases": ["Free T4", "FT4", "Thyroxine Free"], "units": ["ng/dL", "pmol/L"] },
+    { "canonical_name": "Free T3", "aliases": ["Free T3", "FT3", "Triiodothyronine Free"], "units": ["pg/mL", "pmol/L"] },
+    { "canonical_name": "Total T4", "aliases": ["Total T4", "T4", "Thyroxine Total"], "units": ["ug/dL", "nmol/L"] },
+    { "canonical_name": "Total T3", "aliases": ["Total T3", "T3", "Triiodothyronine Total"], "units": ["ng/dL", "nmol/L"] }
+  ],
+  "Kidney": [
+    { "canonical_name": "Creatinine", "aliases": ["Creatinine", "Serum Creatinine"], "units": ["mg/dL", "umol/L"] },
+    { "canonical_name": "BUN", "aliases": ["BUN", "Blood Urea Nitrogen", "Urea Nitrogen"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "eGFR", "aliases": ["eGFR", "Estimated Glomerular Filtration Rate", "GFR"], "units": ["mL/min/1.73m2", "mL/min"] },
+    { "canonical_name": "Uric Acid", "aliases": ["Uric Acid", "Serum Uric Acid"], "units": ["mg/dL", "umol/L"] },
+    { "canonical_name": "Urea", "aliases": ["Urea", "Serum Urea"], "units": ["mg/dL", "mmol/L"] }
+  ],
+  "Liver": [
+    { "canonical_name": "ALT", "aliases": ["ALT", "SGPT", "Alanine Aminotransferase"], "units": ["U/L", "IU/L"] },
+    { "canonical_name": "AST", "aliases": ["AST", "SGOT", "Aspartate Aminotransferase"], "units": ["U/L", "IU/L"] },
+    { "canonical_name": "ALP", "aliases": ["ALP", "Alkaline Phosphatase", "Alk Phos"], "units": ["U/L", "IU/L"] },
+    { "canonical_name": "Total Bilirubin", "aliases": ["Total Bilirubin", "Bilirubin Total"], "units": ["mg/dL", "umol/L"] },
+    { "canonical_name": "Direct Bilirubin", "aliases": ["Direct Bilirubin", "Bilirubin Direct", "Conjugated Bilirubin"], "units": ["mg/dL", "umol/L"] },
+    { "canonical_name": "Albumin", "aliases": ["Albumin", "Serum Albumin"], "units": ["g/dL", "g/L"] },
+    { "canonical_name": "Total Protein", "aliases": ["Total Protein", "Serum Total Protein"], "units": ["g/dL", "g/L"] }
+  ],
+  "Electrolytes": [
+    { "canonical_name": "Sodium", "aliases": ["Sodium", "Na"], "units": ["mEq/L", "mmol/L"] },
+    { "canonical_name": "Potassium", "aliases": ["Potassium", "K"], "units": ["mEq/L", "mmol/L"] },
+    { "canonical_name": "Chloride", "aliases": ["Chloride", "Cl"], "units": ["mEq/L", "mmol/L"] },
+    { "canonical_name": "Calcium", "aliases": ["Calcium", "Ca", "Total Calcium"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "Magnesium", "aliases": ["Magnesium", "Mg"], "units": ["mg/dL", "mmol/L"] },
+    { "canonical_name": "Phosphorus", "aliases": ["Phosphorus", "Phosphate", "PO4"], "units": ["mg/dL", "mmol/L"] }
+  ],
+  "Other": [
+    { "canonical_name": "Vitamin B12", "aliases": ["Vitamin B12", "Vit B12", "Cobalamin"], "units": ["pg/mL", "pmol/L"] },
+    { "canonical_name": "Vitamin D", "aliases": ["Vitamin D", "Vit D", "25-OH Vitamin D", "25-Hydroxyvitamin D"], "units": ["ng/mL", "nmol/L"] },
+    { "canonical_name": "Ferritin", "aliases": ["Ferritin", "Serum Ferritin"], "units": ["ng/mL", "ug/L"] },
+    { "canonical_name": "CRP", "aliases": ["CRP", "C-Reactive Protein"], "units": ["mg/L", "mg/dL"] },
+    { "canonical_name": "hs-CRP", "aliases": ["hs-CRP", "High Sensitivity CRP"], "units": ["mg/L"] },
+    { "canonical_name": "Iron", "aliases": ["Iron", "Serum Iron", "Fe"], "units": ["ug/dL", "umol/L"] },
+    { "canonical_name": "TIBC", "aliases": ["TIBC", "Total Iron Binding Capacity"], "units": ["ug/dL", "umol/L"] }
+  ]
+}

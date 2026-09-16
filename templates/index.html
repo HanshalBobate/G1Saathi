@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G1Saathi — AI Healthcare Assistant</title>
+    <meta name="description" content="Agentic AI Healthcare Information Assistant providing grounded medical literature and clinical document Q&A with page-level citations.">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Marked.js for markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+
+    <!-- Plotly.js for 3D Vector Representation -->
+    <script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+    
+    <!-- Vis.js for Knowledge Graph -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo">
+                    <span class="logo-icon">🩺</span>
+                    <div class="brand-text">
+                        <h1 class="brand-title">G1Saathi</h1>
+                        <span class="brand-subtitle">Agentic Healthcare AI</span>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-tab="ask" id="nav-btn-ask">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-label">Ask G1Saathi</span>
+                </button>
+                <button class="nav-btn" data-tab="reports" id="nav-btn-reports">
+                    <span class="nav-icon">📄</span>
+                    <span class="nav-label">Medical Reports</span>
+                    <span class="badge badge-subtle" id="reports-count-badge">0</span>
+                </button>
+                <button class="nav-btn" data-tab="sources" id="nav-btn-sources">
+                    <span class="nav-icon">📚</span>
+                    <span class="nav-label">Knowledge Sources</span>
+                </button>
+                <button class="nav-btn" data-tab="knowledge" id="nav-btn-knowledge">
+                    <span class="nav-icon">🧬</span>
+                    <span class="nav-label">Medical Knowledge</span>
+                </button>
+                <button class="nav-btn" data-tab="evaluation" id="nav-btn-evaluation">
+                    <span class="nav-icon">🧪</span>
+                    <span class="nav-label">Evaluation Center</span>
+                </button>
+                <button class="nav-btn" data-tab="system" id="nav-btn-system">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">System</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-meta">
+                <div class="meta-card">
+                    <div class="meta-card-header">
+                        <span class="meta-title">LLM PROVIDER</span>
+                        <span class="badge badge-blue" id="provider-badge">{{ provider }}</span>
+                    </div>
+                    <div class="meta-card-sub" id="model-name-display">Loading model...</div>
+                </div>
+
+                <div class="meta-card">
+                    <div class="meta-card-header">
+                        <span class="meta-title">VECTOR STORE</span>
+                        <span class="badge badge-amber" id="index-status-badge">Checking...</span>
+                    </div>
+                    <div class="meta-card-sub" id="index-files-count">0 reports indexed</div>
+                </div>
+
+                <div class="disclaimer-card">
+                    <div class="disclaimer-title">⚠️ Clinical Disclaimer</div>
+                    <p class="disclaimer-text">
+                        G1Saathi provides medical <strong>information only</strong> based strictly on uploaded documents. It does not provide medical diagnosis, treatment, or clinical advice.
+                    </p>
+                </div>
+
+                <div class="sidebar-footer">
+                    <span>G1Saathi v{{ app_version }}</span>
+                    <span class="status-dot online" title="Service active"></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Topbar (Mobile trigger + Page Title) -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle menu">☰</button>
+                    <div class="current-view-title" id="current-view-title">Ask G1Saathi</div>
+                </div>
+                <div class="topbar-right">
+                    <button class="btn btn-ghost btn-sm" id="btn-quick-samples" title="Load sample medical papers">
+                        <span>🧪 Load Sample Reports</span>
+                    </button>
+                    <button class="btn btn-ghost btn-sm" id="btn-clear-chat" title="Clear conversation history">
+                        <span>🗑️ Clear Chat</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB 1: ASK G1SAATHI -->
+            <section class="tab-pane active" id="tab-ask">
+                <div class="chat-container">
+                    <div class="messages-scroll" id="messages-container">
+                        <!-- Welcome empty state -->
+                        <div class="empty-state" id="empty-state">
+                            <div class="empty-icon">🩺</div>
+                            <h2 class="empty-title">Welcome to G1Saathi</h2>
+                            <p class="empty-sub">
+                                An agentic healthcare information system providing grounded answers with exact source & page-level citations from your medical reports.
+                            </p>
+
+                            <div class="quick-prompts-title">🎬 Demo Scenarios:</div>
+                            <div class="quick-prompts" id="quick-prompts">
+                                <button class="prompt-chip" data-prompt="What are the symptoms of diabetes?">
+                                    Scenario 1: What are the symptoms of diabetes? (Normal)
+                                </button>
+                                <button class="prompt-chip" data-prompt="मधुमेह के लक्षण क्या हैं?">
+                                    Scenario 2: मधुमेह के लक्षण क्या हैं? (Multilingual)
+                                </button>
+                                <button class="prompt-chip" data-prompt="What are the latest diabetes guidelines?">
+                                    Scenario 3: What are the latest diabetes guidelines? (Current Info)
+                                </button>
+                                <button class="prompt-chip" data-prompt="Analyze my CBC report." onclick="document.getElementById('nav-btn-reports').click();">
+                                    Scenario 4: Analyze my CBC report. (Requires Upload)
+                                </button>
+                                <button class="prompt-chip" data-prompt="What changed between my two reports?" onclick="document.getElementById('nav-btn-reports').click();">
+                                    Scenario 5: What changed between my two reports? (Requires 2 Uploads)
+                                </button>
+                                <button class="prompt-chip" data-prompt="मुझे बहुत तेज सीने में दर्द और सांस लेने में दिक्कत है">
+                                    Scenario 6: Emergency Bypass
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <div class="chat-input-wrapper">
+                        <div class="input-container">
+                            <textarea 
+                                id="chat-input" 
+                                rows="1" 
+                                placeholder="Ask a question about your indexed medical reports..." 
+                                aria-label="Medical query input"
+                            ></textarea>
+                            <button id="btn-send" class="btn btn-primary btn-send" aria-label="Send query">
+                                <span>Send</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="input-caption">
+                            <span>Answers are strictly grounded in indexed PDF documents with verifiable citations.</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Retrieval Inspector -->
+                    <div class="retrieval-inspector" id="retrieval-inspector" style="display: none; border-top: 1px solid var(--border-color); padding: 12px; background: var(--bg-1); font-size: 0.85em; margin-top: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" id="inspector-toggle">
+                            <strong>🔬 Retrieval Inspector</strong>
+                            <span id="inspector-icon">▼</span>
+                        </div>
+                        <div id="inspector-content" style="display: none; margin-top: 10px; font-family: monospace; color: #555; max-height: 200px; overflow-y: auto;">
+                            <!-- Diagnostics injected here -->
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- TAB 2: MEDICAL REPORTS -->
+            <section class="tab-pane" id="tab-reports">
+                <div class="view-header">
+                    <h2 class="view-title">📄 Medical Reports & Document Ingestion</h2>
+                    <p class="view-subtitle">Upload clinical guidelines, lab studies, or imaging reports (PDF). Rebuilding the index replaces the current vector store to guarantee document isolation.</p>
+                </div>
+
+                <div class="reports-grid">
+                    <!-- Dropzone Card -->
+                    <div class="card dropzone-card">
+                        <div class="dropzone" id="pdf-dropzone">
+                            <div class="dropzone-icon">📥</div>
+                            <h3 class="dropzone-title">Drag & Drop Medical PDFs Here</h3>
+                            <p class="dropzone-sub">or click to browse from your computer (PDF only, up to 64MB)</p>
+                            <input type="file" id="file-input" accept=".pdf" multiple style="display: none;">
+                            <button class="btn btn-outline" id="btn-browse-files">Select PDF Files</button>
+                        </div>
+
+                        <div class="sample-loader-box">
+                            <span>Want to test immediately with real samples?</span>
+                            <button class="btn btn-sm btn-secondary" id="btn-load-samples-card">
+                                📋 Load Sample Studies (Ultrasound & SPECT)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- File List & Index Actions Card -->
+                    <div class="card file-list-card">
+                        <div class="card-header-row">
+                            <div>
+                                <h3 class="card-title">Uploaded Reports Queue</h3>
+                                <span class="queue-subtitle">Protected with cryptic token deduplication</span>
+                            </div>
+                            <div class="queue-header-actions">
+                                <span class="file-count-badge" id="queue-count-badge">0 files</span>
+                                <button class="btn btn-ghost btn-sm" id="btn-clear-queue" title="Remove all files from queue">
+                                    🗑️ Clear Queue
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="file-queue-container" id="file-queue-list">
+                            <div class="empty-list-placeholder">No PDF reports added yet. Drop files on the left or load samples.</div>
+                        </div>
+
+                        <div class="index-actions-box">
+                            <button class="btn btn-primary btn-lg" id="btn-start-index" disabled>
+                                ⚡ Index Uploaded Reports into Chroma
+                            </button>
+                            <p class="index-actions-note">Processes text chunks, computes embeddings, and populates the isolated vector store.</p>
+                        </div>
+
+                        <!-- Progress / Result Box -->
+                        <div class="index-progress-box" id="index-progress-box" style="display: none;">
+                            <div class="progress-spinner" id="progress-spinner"></div>
+                            <span class="progress-static-icon" id="progress-static-icon" style="display: none;">✅</span>
+                            <div class="progress-details" id="progress-details">Indexing in progress...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NEW PHASE 6: Report Analysis & Trends -->
+                <div class="card mt-4" id="report-analysis-card">
+                    <div class="card-header-row">
+                        <div>
+                            <h3 class="card-title">🔬 Deterministic Report Analysis & Trends</h3>
+                            <p class="queue-subtitle">Analyze single reports or compare longitudinal trends. <span class="badge badge-amber">Synthetic Demo</span></p>
+                        </div>
+                        <div>
+                            <button class="btn btn-outline btn-sm" id="btn-analyze-report">Analyze Single</button>
+                            <button class="btn btn-primary btn-sm" id="btn-compare-reports">Compare Trends</button>
+                        </div>
+                    </div>
+                    <div id="analysis-results-container" style="display: none; margin-top: 20px; padding: 15px; background: var(--bg-1); border-radius: 8px;">
+                        <!-- Results injected dynamically via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: KNOWLEDGE SOURCES -->
+            <section class="tab-pane" id="tab-sources">
+                <div class="view-header">
+                    <h2 class="view-title">📚 Knowledge Sources & Vector Index</h2>
+                    <p class="view-subtitle">Live overview of the Chroma vector store, embedding models, and chunking parameters.</p>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-icon">🗄️</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Vector Store</div>
+                            <div class="stat-val" id="stat-vectorstore">Chroma DB</div>
+                            <div class="stat-badge" id="stat-store-status">Checking...</div>
+                            <div class="stat-sub" style="margin-top: 4px;">Last indexed: <span id="stat-last-indexed">N/A</span></div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🧠</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Embedding Model</div>
+                            <div class="stat-val" id="stat-embed-model">Loading...</div>
+                            <div class="stat-badge badge-blue" id="stat-embed-provider">Local</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📑</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Active Documents</div>
+                            <div class="stat-val" id="stat-doc-count">0</div>
+                            <div class="stat-sub">PDF sources loaded</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🧩</div>
+                        <div class="stat-info">
+                            <div class="stat-label">Total Chunks</div>
+                            <div class="stat-val" id="stat-chunks-count">0 Chunks</div>
+                            <div class="stat-sub">indexed in Chroma vector store</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3D Vector Database Representation -->
+                <div class="card mt-4">
+                    <div class="card-header-row">
+                        <h3 class="card-title">3D Vector Database Representation</h3>
+                        <button class="btn btn-ghost btn-sm" id="btn-refresh-plot" title="Refresh 3D Plot">
+                            🔄 Refresh
+                        </button>
+                    </div>
+                    <div id="vector-3d-plot" style="width: 100%; height: 500px; border-radius: 8px; overflow: hidden; background: var(--bg-1);">
+                        <div class="empty-list-placeholder" id="plot-placeholder">Loading 3D vector space...</div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <div class="card-header-row">
+                        <h3 class="card-title">Indexed Clinical Documents</h3>
+                        <button class="btn btn-danger btn-sm" id="btn-clear-index">
+                            🗑️ Clear Vector Index
+                        </button>
+                    </div>
+
+                    <div class="indexed-table-wrapper">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Document Name</th>
+                                    <th>Chunks & Pages</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="indexed-docs-tbody">
+                                <tr>
+                                    <td colspan="3" class="table-empty">No indexed documents found.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: MEDICAL KNOWLEDGE -->
+            <section class="tab-pane" id="tab-knowledge">
+                <div class="view-header">
+                    <h2 class="view-title">🧬 Medical Knowledge Explorer</h2>
+                    <p class="view-subtitle">Explore the structured medical ontology mapping diseases, symptoms, and multilingual terminology.</p>
+                </div>
+                
+                <div class="knowledge-grid">
+                    <!-- Search and List -->
+                    <div class="card" style="flex: 1; max-width: 400px; display: flex; flex-direction: column;">
+                        <h3 class="card-title">Terminology Directory</h3>
+                        <div class="input-container" style="margin-bottom: 12px; border-radius: 6px;">
+                            <input type="text" id="ontology-search" placeholder="Search medical knowledge..." style="width: 100%; padding: 8px; border: none; background: transparent; color: var(--text-color); outline: none;">
+                        </div>
+                        <div id="ontology-list" style="overflow-y: auto; max-height: 500px; display: flex; flex-direction: column; gap: 8px;">
+                            <!-- Items injected dynamically -->
+                        </div>
+                    </div>
+                    
+                    <!-- Graph View -->
+                    <div class="card" style="flex: 2; display: flex; flex-direction: column;">
+                        <div class="card-header-row">
+                            <h3 class="card-title">Knowledge Graph</h3>
+                            <button class="btn btn-ghost btn-sm" id="btn-refresh-graph">🔄 Refresh</button>
+                        </div>
+                        <div id="knowledge-graph-container" style="flex: 1; min-height: 400px; background: var(--bg-1); border-radius: 8px; border: 1px solid var(--border-color);">
+                            <!-- Vis.js network will be rendered here -->
+                        </div>
+                        <p style="font-size: 0.8em; color: #888; margin-top: 10px; text-align: center;">This is a terminology explorer, not a diagnostic tool.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: SYSTEM -->
+            <section class="tab-pane" id="tab-system">
+                <div class="view-header">
+                    <h2 class="view-title">⚙️ System Diagnostics & Runtime</h2>
+                    <p class="view-subtitle">Runtime parameters, provider configuration, and structured logging telemetry.</p>
+                </div>
+
+                <div class="system-grid">
+                    <div class="card">
+                        <h3 class="card-title">Application Engine</h3>
+                        <div class="sys-item">
+                            <span class="sys-label">App:</span>
+                            <span class="sys-val" id="sys-app-name">G1Saathi v1.0.0</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Framework:</span>
+                            <span class="sys-val">Flask + LangChain + Chroma</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Python Version:</span>
+                            <span class="sys-val" id="sys-python-ver">3.10</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Safety Screening:</span>
+                            <span class="sys-val badge badge-green">Active (Regex Crisis Filter)</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">LLM & Retrieval Stack</h3>
+                        <div class="sys-item">
+                            <span class="sys-label">Provider:</span>
+                            <span class="sys-val badge badge-blue" id="sys-provider">OLLAMA</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Chat Model:</span>
+                            <span class="sys-val" id="sys-chat-model">llama3.2</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Embedding Model:</span>
+                            <span class="sys-val" id="sys-embed-model">nomic-embed-text</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Chunk Strategy:</span>
+                            <span class="sys-val">Recursive (1000 char, 150 overlap)</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Storage & Logging</h3>
+                        <div class="sys-item">
+                            <span class="sys-label">Vector Store Path:</span>
+                            <span class="sys-val code-text" id="sys-persist-dir">chroma_db/</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Rotating Log Path:</span>
+                            <span class="sys-val code-text" id="sys-log-dir">logs/g1saathi.log</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Current Log Size:</span>
+                            <span class="sys-val" id="sys-log-size">0 KB</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">⚡ Workflow Metrics</h3>
+                        <div class="sys-item">
+                            <span class="sys-label">Total Queries:</span>
+                            <span class="sys-val" id="metric-queries">0</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Avg LLM Calls:</span>
+                            <span class="sys-val" id="metric-avg-llm">0</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Avg Vector Searches:</span>
+                            <span class="sys-val" id="metric-avg-vector">0</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">External Searches Triggered:</span>
+                            <span class="sys-val" id="metric-ext-search">0</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Emergency Interceptions:</span>
+                            <span class="sys-val badge badge-red" id="metric-emergency">0</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Insufficient Evidence Responses:</span>
+                            <span class="sys-val" id="metric-insufficient">0</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Grounding Revisions:</span>
+                            <span class="sys-val" id="metric-revisions">0</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Local Ollama Setup Notice</h3>
+                        <p class="ollama-guide">
+                            When running locally with Ollama, ensure your background service is active:
+                        </p>
+                        <pre class="code-block"><code>ollama serve
+ollama pull llama3.2
+ollama pull nomic-embed-text</code></pre>
+                    </div>
+                </div>
+            </section>
+            <!-- TAB 6: EVALUATION CENTER -->
+            <section class="tab-pane" id="tab-evaluation">
+                <div class="view-header">
+                    <h2 class="view-title">🧪 Evaluation & Reliability Center</h2>
+                    <p class="view-subtitle">Automated validation of RAG pipelines, safety constraints, evidence coverage, and clinical accuracy metrics.</p>
+                </div>
+
+                <div class="evaluation-actions mb-4" style="display: flex; gap: 10px; margin-bottom: 20px;">
+                    <button class="btn btn-primary" id="btn-run-eval">
+                        ⚡ Run Full Evaluation Suite
+                    </button>
+                    <button class="btn btn-outline" id="btn-export-eval">
+                        📥 Export to CSV
+                    </button>
+                    <button class="btn btn-secondary" id="btn-demo-mode" style="margin-left: auto;">
+                        🎬 Enter Hackathon Demo Mode
+                    </button>
+                </div>
+                
+                <!-- Evaluation Status & Results -->
+                <div id="eval-status-box" style="display: none; padding: 15px; margin-bottom: 20px; background: var(--bg-1); border-radius: 8px; border: 1px solid var(--border-color);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="progress-spinner"></div>
+                        <span id="eval-status-text">Evaluation running in background...</span>
+                    </div>
+                </div>
+
+                <div class="system-grid">
+                    <div class="card">
+                        <h3 class="card-title">Overall Scoreboard</h3>
+                        <div class="sys-item">
+                            <span class="sys-label">Total Tests:</span>
+                            <span class="sys-val" id="eval-total">-</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Passed:</span>
+                            <span class="sys-val badge badge-green" id="eval-passed">-</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Failed:</span>
+                            <span class="sys-val badge badge-red" id="eval-failed">-</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Last Run:</span>
+                            <span class="sys-val" id="eval-timestamp">-</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title">Evidence & Reliability Metrics</h3>
+                        <div class="sys-item">
+                            <span class="sys-label">Avg Evidence Coverage:</span>
+                            <span class="sys-val" id="eval-coverage">-</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Avg Claims Supported:</span>
+                            <span class="sys-val" id="eval-claims">-</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">Emergency Interceptions:</span>
+                            <span class="sys-val badge badge-amber" id="eval-emergencies">-</span>
+                        </div>
+                        <div class="sys-item">
+                            <span class="sys-label">External Research Used:</span>
+                            <span class="sys-val" id="eval-external">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <h3 class="card-title">Evaluation Cases Inspector</h3>
+                    <div class="indexed-table-wrapper" style="max-height: 400px; overflow-y: auto;">
+                        <table class="data-table" id="eval-cases-table">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Category</th>
+                                    <th>Query</th>
+                                    <th>Expected</th>
+                                    <th>Actual</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" class="table-empty">No results found. Run evaluation suite.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Source Preview Modal / Drawer -->
+    <div class="modal-overlay" id="source-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-source-title">Source Citation Detail</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-source-body">
+                <!-- Snippet injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- App JavaScript -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

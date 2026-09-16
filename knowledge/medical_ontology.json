@@ -1,0 +1,182 @@
+[
+  {
+    "canonical_name": "Diabetes Mellitus",
+    "aliases": ["diabetes", "diabetes mellitus", "sugar disease", "मधुमेह", "शुगर", "मधुमेह रोग", "मधुमेहाचा आजार"],
+    "category": "metabolic",
+    "related_terms": ["blood glucose", "insulin", "hyperglycemia"]
+  },
+  {
+    "canonical_name": "Hypertension",
+    "aliases": ["high blood pressure", "hypertension", "bp", "उच्च रक्तचाप", "हाई बीपी", "उच्च रक्तदाब", "हाय बीपी"],
+    "category": "cardiovascular",
+    "related_terms": ["blood pressure", "systolic", "diastolic"]
+  },
+  {
+    "canonical_name": "Asthma",
+    "aliases": ["asthma", "bronchial asthma", "दमा", "अस्थमा", "सांस की बीमारी"],
+    "category": "respiratory",
+    "related_terms": ["wheezing", "inhaler", "bronchospasm"]
+  },
+  {
+    "canonical_name": "Influenza",
+    "aliases": ["flu", "influenza", "फ्लू", "इन्फ्लूएंजा", "ताप", "सर्दी-ताप"],
+    "category": "infectious",
+    "related_terms": ["fever", "virus", "vaccine"]
+  },
+  {
+    "canonical_name": "COVID-19",
+    "aliases": ["covid", "coronavirus", "sars-cov-2", "कोविड", "कोरोना", "कोविड-१९"],
+    "category": "infectious",
+    "related_terms": ["pandemic", "pcr", "respiratory distress"]
+  },
+  {
+    "canonical_name": "Tuberculosis",
+    "aliases": ["tb", "tuberculosis", "टीबी", "क्षयरोग", "तपेदिक"],
+    "category": "infectious",
+    "related_terms": ["mycobacterium", "cough", "dot therapy"]
+  },
+  {
+    "canonical_name": "Pneumonia",
+    "aliases": ["pneumonia", "निमोनिया", "फुफ्फुसाचा दाह"],
+    "category": "respiratory",
+    "related_terms": ["lungs", "infection", "x-ray"]
+  },
+  {
+    "canonical_name": "Malaria",
+    "aliases": ["malaria", "मलेरिया", "हिवाताप"],
+    "category": "infectious",
+    "related_terms": ["mosquito", "plasmodium", "fever"]
+  },
+  {
+    "canonical_name": "Dengue",
+    "aliases": ["dengue", "dengue fever", "डेंगू", "डेंग्यू"],
+    "category": "infectious",
+    "related_terms": ["mosquito", "platelets", "rash"]
+  },
+  {
+    "canonical_name": "Migraine",
+    "aliases": ["migraine", "severe headache", "माइग्रेन", "आधाशीशी", "मायग्रेन"],
+    "category": "neurological",
+    "related_terms": ["headache", "aura", "nausea"]
+  },
+  {
+    "canonical_name": "Anemia",
+    "aliases": ["anemia", "anaemia", "low hemoglobin", "एनीमिया", "रक्ताल्पता", "रक्ताची कमतरता"],
+    "category": "hematological",
+    "related_terms": ["iron", "hemoglobin", "fatigue"]
+  },
+  {
+    "canonical_name": "Myocardial Infarction",
+    "aliases": ["heart attack", "mi", "myocardial infarction", "दिल का दौरा", "हृदयविकाराचा झटका", "हार्ट अटॅक"],
+    "category": "cardiovascular",
+    "related_terms": ["chest pain", "coronary artery", "ecg"]
+  },
+  {
+    "canonical_name": "Stroke",
+    "aliases": ["stroke", "cva", "brain attack", "लकवा", "पक्षाघात", "स्ट्रोक", "ब्रेन स्ट्रोक"],
+    "category": "neurological",
+    "related_terms": ["brain", "ischemia", "hemorrhage"]
+  },
+  {
+    "canonical_name": "Obesity",
+    "aliases": ["obesity", "overweight", "मोटापा", "लठ्ठपणा"],
+    "category": "metabolic",
+    "related_terms": ["bmi", "weight", "diet"]
+  },
+  {
+    "canonical_name": "Common Cold",
+    "aliases": ["cold", "common cold", "सर्दी", "जुकाम", "सर्दी-खोकला"],
+    "category": "respiratory",
+    "related_terms": ["rhinovirus", "cough", "sore throat"]
+  },
+  {
+    "canonical_name": "Food Poisoning",
+    "aliases": ["food poisoning", "फूड पॉइजनिंग", "अन्नविषबाधा", "विषाक्त भोजन"],
+    "category": "gastrointestinal",
+    "related_terms": ["vomiting", "diarrhea", "bacteria"]
+  },
+  {
+    "canonical_name": "Dehydration",
+    "aliases": ["dehydration", "निर्जलीकरण", "डिहायड्रेशन", "शरीरात पाण्याची कमतरता"],
+    "category": "general",
+    "related_terms": ["water", "electrolytes", "thirst"]
+  },
+  {
+    "canonical_name": "Arthritis",
+    "aliases": ["arthritis", "joint pain", "गठिया", "संधिवात", "सांधेदुखी"],
+    "category": "musculoskeletal",
+    "related_terms": ["inflammation", "joints", "pain"]
+  },
+  {
+    "canonical_name": "Kidney Stones",
+    "aliases": ["kidney stones", "renal calculi", "गुर्दे की पथरी", "मुतखडा"],
+    "category": "urological",
+    "related_terms": ["calcium", "pain", "urine"]
+  },
+  {
+    "canonical_name": "Urinary Tract Infection",
+    "aliases": ["uti", "urinary tract infection", "यूरिन इन्फेक्शन", "मूत्रमार्ग संक्रमण", "लघवीचा संसर्ग"],
+    "category": "urological",
+    "related_terms": ["bacteria", "burning", "antibiotics"]
+  },
+  {
+    "canonical_name": "Gastritis",
+    "aliases": ["gastritis", "stomach inflammation", "गैस्ट्राइटिस", "पोटाचा दाह", "ऍसिडिटी", "पेट में सूजन"],
+    "category": "gastrointestinal",
+    "related_terms": ["acid", "stomach", "ulcer"]
+  },
+  {
+    "canonical_name": "Gastroesophageal Reflux Disease",
+    "aliases": ["gerd", "acid reflux", "acidity", "एसिडिटी", "अम्लपित्त", "हार्टबर्न"],
+    "category": "gastrointestinal",
+    "related_terms": ["heartburn", "esophagus", "antacids"]
+  },
+  {
+    "canonical_name": "Hepatitis",
+    "aliases": ["hepatitis", "jaundice", "हेपेटाइटिस", "पीलिया", "कावीळ"],
+    "category": "hepatic",
+    "related_terms": ["liver", "virus", "yellowing"]
+  },
+  {
+    "canonical_name": "Chickenpox",
+    "aliases": ["chickenpox", "varicella", "चिकनपॉक्स", "कांजिण्या", "छोटी माता"],
+    "category": "infectious",
+    "related_terms": ["blisters", "virus", "itch"]
+  },
+  {
+    "canonical_name": "Measles",
+    "aliases": ["measles", "rubeola", "खसरा", "गोवर"],
+    "category": "infectious",
+    "related_terms": ["rash", "vaccine", "fever"]
+  },
+  {
+    "canonical_name": "Chest Pain",
+    "aliases": ["chest pain", "angina", "सीने में दर्द", "छातीत दुखणे", "छातीत तीव्र वेदना"],
+    "category": "symptom",
+    "related_terms": ["heart", "lungs", "discomfort"]
+  },
+  {
+    "canonical_name": "Headache",
+    "aliases": ["headache", "head ache", "सिरदर्द", "डोकेदुखी"],
+    "category": "symptom",
+    "related_terms": ["migraine", "tension", "pain"]
+  },
+  {
+    "canonical_name": "Thyroid Disorders",
+    "aliases": ["thyroid", "thyroid problem", "थायराइड", "थायरॉईड"],
+    "category": "endocrine",
+    "related_terms": ["hormones", "neck", "gland"]
+  },
+  {
+    "canonical_name": "Hypothyroidism",
+    "aliases": ["hypothyroidism", "underactive thyroid", "हाइपोथायरायडिज्म"],
+    "category": "endocrine",
+    "related_terms": ["tsh", "weight gain", "fatigue"]
+  },
+  {
+    "canonical_name": "Hyperthyroidism",
+    "aliases": ["hyperthyroidism", "overactive thyroid", "हाइपरथायरायडिज्म"],
+    "category": "endocrine",
+    "related_terms": ["tsh", "weight loss", "heart rate"]
+  }
+]
