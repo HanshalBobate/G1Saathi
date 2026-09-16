@@ -879,7 +879,11 @@
                         snippet = escapeHtml(matchedSource.snippet).replace(/"/g, '&quot;');
                     }
                 }
-                return `<a class="citation-link" data-snippet="${snippet}">${match}</a>`;
+                if (snippet) {
+                    return `<a class="citation-link" data-snippet="${snippet}">${match}</a>`;
+                } else {
+                    return match;
+                }
             });
             contentDiv.innerHTML = marked.parse(formattedText);
             
