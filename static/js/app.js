@@ -712,8 +712,6 @@
     }
 
     async function enterDemoMode() {
-        const password = prompt("Enter Hackathon Demo Password:");
-        if (!password) return;
         
         // Let's implement demo mode logic
         // This simulates a full run being triggered with synthesized data if we want.
@@ -782,7 +780,7 @@
             if (inspector && inspectorContent && data.retrieval_diagnostics) {
                 inspector.style.display = "block";
                 inspectorContent.innerHTML = `
-                    <div style="margin-bottom: 4px;"><strong>Query:</strong> ${escapeHtml(message)}</div>
+                    <div style="margin-bottom: 4px;"><strong>Query:</strong> ${escapeHtml(query)}</div>
                     <div style="margin-bottom: 4px;"><strong>Retrieved chunks:</strong> ${data.retrieval_diagnostics.retrieval_count || 0}</div>
                     <div style="margin-bottom: 4px;"><strong>Average Score:</strong> ${data.retrieval_diagnostics.average_score || 'N/A'}</div>
                     <div style="margin-bottom: 4px;"><strong>Top Score:</strong> ${data.retrieval_diagnostics.top_score || 'N/A'}</div>
