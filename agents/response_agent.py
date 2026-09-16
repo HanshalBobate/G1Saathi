@@ -84,7 +84,10 @@ def extract_and_verify_claims(response_text: str, context_str: str) -> List[Dict
         return []
 
 def run_response_agent(state: AgentState) -> AgentState:
-    
+    if getattr(state, "risk_level", "none") == "HIGH":
+        state.agent_trace.append("✓ Response bypassed (Emergency handled by Safety Gate)")
+        return state
+        
     if getattr(state, "tool_calls", None) is None:
         state.tool_calls = {}
     state.tool_calls["llm_response_agent"] = state.tool_calls.get("llm_response_agent", 0) + 1
