@@ -1306,3 +1306,19 @@ body {
         max-width: 100% !important;
     }
 }
+
+/* Formatting Fixes */
+.citation-link {
+    color: var(--accent-blue) !important;
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+.citation-link:hover {
+    color: var(--accent-blue-hover) !important;
+}
+.message-text ul, .message-text ol {
+    padding-left: 20px;
+    list-style-position: outside;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}

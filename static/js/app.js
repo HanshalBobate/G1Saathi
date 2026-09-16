@@ -88,7 +88,24 @@
         setupEventListeners();
         fetchStatus();
         fetchSystem();
+        loadChatHistory();
     });
+
+    function loadChatHistory() {
+        try {
+            const saved = localStorage.getItem("g1saathi_chat_history");
+            if (saved) {
+                const history = JSON.parse(saved);
+                if (history && history.length > 0) {
+                    if (elements.emptyState) elements.emptyState.style.display = "none";
+                    state.messages = history;
+                    history.forEach(msg => appendMessage(msg, true));
+                }
+            }
+        } catch (e) {
+            console.error("Failed to load chat history:", e);
+        }
+    }
 
     // ── Event Listeners ────────────────────────────────────────────────────────
     function setupEventListeners() {
@@ -804,8 +821,12 @@
         }
     }
 
-    function appendMessage({ role, text, sources, safetyAlert, agentTrace, evidenceMetrics, taskPlan, toolCalls, nextSteps, informationGap }) {
-        state.messages.push({ role, text });
+    function appendMessage(msgObj, skipSave = false) {
+        const { role, text, sources, safetyAlert, agentTrace, evidenceMetrics, taskPlan, toolCalls, nextSteps, informationGap } = msgObj;
+        if (!skipSave) {
+            state.messages.push(msgObj);
+            localStorage.setItem("g1saathi_chat_history", JSON.stringify(state.messages));
+        }
 
         const row = document.createElement("div");
         row.className = `message-row ${role}`;
@@ -841,7 +862,10 @@
         const contentDiv = document.createElement("div");
         contentDiv.className = "message-text";
         if (typeof marked !== "undefined") {
-            contentDiv.innerHTML = marked.parse(text);
+            let formattedText = text.replace(/\[([^\]]+)\](?!\s*\()/g, (match, inner) => {
+                return `<a class="citation-link">${match}</a>`;
+            });
+            contentDiv.innerHTML = marked.parse(formattedText);
         } else {
             contentDiv.textContent = text;
         }
@@ -1114,6 +1138,8 @@
     }
 
     function clearConversation() {
+        state.messages = [];
+        localStorage.removeItem("g1saathi_chat_history");
         elements.messagesContainer.innerHTML = "";
         if (elements.emptyState) {
             elements.messagesContainer.appendChild(elements.emptyState);
