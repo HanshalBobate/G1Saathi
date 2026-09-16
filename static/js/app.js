@@ -863,9 +863,35 @@
         contentDiv.className = "message-text";
         if (typeof marked !== "undefined") {
             let formattedText = text.replace(/\[([^\]]+)\](?!\s*\()/g, (match, inner) => {
-                return `<a class="citation-link">${match}</a>`;
+                let snippet = "";
+                if (sources && sources.length > 0) {
+                    const innerLower = inner.toLowerCase();
+                    const matchedSource = sources.find(s => {
+                        if (s.type === 'local' && s.file) {
+                            return innerLower.includes(s.file.toLowerCase());
+                        } else if (s.type === 'external' && s.domain) {
+                            return innerLower.includes(s.domain.toLowerCase()) || 
+                                   (s.title && innerLower.includes(s.title.toLowerCase()));
+                        }
+                        return false;
+                    });
+                    if (matchedSource && matchedSource.snippet) {
+                        snippet = escapeHtml(matchedSource.snippet).replace(/"/g, '&quot;');
+                    }
+                }
+                return `<a class="citation-link" data-snippet="${snippet}">${match}</a>`;
             });
             contentDiv.innerHTML = marked.parse(formattedText);
+            
+            // Attach tooltip events
+            const links = contentDiv.querySelectorAll('.citation-link');
+            links.forEach(link => {
+                const snippet = link.getAttribute('data-snippet');
+                if (snippet) {
+                    link.addEventListener('mouseenter', (e) => showCitationTooltip(e, snippet));
+                    link.addEventListener('mouseleave', hideCitationTooltip);
+                }
+            });
         } else {
             contentDiv.textContent = text;
         }
@@ -1591,4 +1617,37 @@
         
         ontologyNetwork = new vis.Network(container, data, options);
     }
+
+    // ── Citation Tooltip Logic ───────────────────────────────────────────────
+    let citationTooltipEl = null;
+
+    function showCitationTooltip(e, text) {
+        if (!citationTooltipEl) {
+            citationTooltipEl = document.createElement("div");
+            citationTooltipEl.className = "citation-tooltip";
+            document.body.appendChild(citationTooltipEl);
+        }
+        citationTooltipEl.innerHTML = `<strong>Source Context:</strong><br/>${text}`;
+        citationTooltipEl.style.display = "block";
+        
+        const rect = e.target.getBoundingClientRect();
+        let top = rect.top - citationTooltipEl.offsetHeight - 8;
+        let left = rect.left + (rect.width / 2) - (citationTooltipEl.offsetWidth / 2);
+        
+        if (top < 0) top = rect.bottom + 8;
+        if (left < 0) left = 8;
+        if (left + citationTooltipEl.offsetWidth > window.innerWidth) {
+            left = window.innerWidth - citationTooltipEl.offsetWidth - 8;
+        }
+        
+        citationTooltipEl.style.top = top + "px";
+        citationTooltipEl.style.left = left + "px";
+    }
+
+    function hideCitationTooltip() {
+        if (citationTooltipEl) {
+            citationTooltipEl.style.display = "none";
+        }
+    }
+
 })();
